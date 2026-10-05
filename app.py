@@ -9,7 +9,7 @@ if not TOKEN:
     raise ValueError("❌ Токен не найден! Добавьте переменную TOKEN на Render.")
 
 # Адрес вашего будущего сервиса на Render (изменим позже)
-WEBHOOK_URL = 'https://ВАШ_АДРЕС.onrender.com/'
+WEBHOOK_URL = 'https://hotel-bot-i0qd.onrender.com/'
 
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
