@@ -3,18 +3,15 @@ import telebot
 from flask import Flask, request
 from telebot import types
 
-# --- КОНФИГУРАЦИЯ ---
 TOKEN = os.environ.get('TOKEN')
 if not TOKEN:
     raise ValueError("❌ Токен не найден! Добавьте переменную TOKEN на Render.")
 
-# Адрес вашего будущего сервиса на Render (изменим позже)
 WEBHOOK_URL = 'https://hotel-bot-i0qd.onrender.com/'
 
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
-# --- ВАШИ ТЕКСТЫ И МЕНЮ ---
 ANSWERS = {
     'Забронировать номер':
         'Забронировать номер вы можете на нашем сайте по ссылке https://skolkovo.smorodina-hotels.com/\n\n'
@@ -55,10 +52,10 @@ ANSWERS = {
         'Если вы едете к нам на личном автомобиле и вам необходима парковка, просьба связаться с нами заранее '
         'для организации пропуска и парковочного места. Связаться с нами можно по телефону +7(495)787-78-80 '
         'или по почте bookings.cssk@smorodina-hotels.com\n\n'
-        'При оформлении пропуска, парковка возможна ТОЛЬКО на парковке отеля. В любых других местах ИЦ Сколково '
+        'При оформлении пропуска, парковка возможна ТОЛЬКО на территории отеля. В любых других местах ИЦ Сколково '
         'парковка запрещена!\n\n'
         'Более подробную информацию о парковке и правилах въезда вы можете найти по ссылке: '
-        'https://skolkovo.smorodina-hotels.com/parking'
+        'https://skolkovo.smorodina-hotels.com/#inumphjak_0'
 }
 
 def main_menu_keyboard():
@@ -75,7 +72,6 @@ def main_menu_keyboard():
     keyboard.add(*buttons)
     return keyboard
 
-# --- ЛОГИКА БОТА ---
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     bot.send_message(
@@ -93,7 +89,6 @@ def handle_menu(message):
             reply_markup=main_menu_keyboard()
         )
 
-# --- ВЕБ-СЕРВЕР ДЛЯ RENDER (WEBHOOK) ---
 @app.route('/' + TOKEN, methods=['POST'])
 def getMessage():
     json_string = request.get_data().decode('utf-8')
